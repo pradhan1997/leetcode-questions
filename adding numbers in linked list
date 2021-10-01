@@ -1,0 +1,57 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        //the obvious approach 
+        //first obtain the first number by traversing l1
+        //then find the second number from l2
+        //add them and create a linked list with that number
+        //total time O(N)+O(N)+O(N)=O(N)
+        
+        ListNode *headl1=l1;
+        ListNode *headl2=l2;
+        string templ1="";
+        string templ2="";
+        while(l1){
+            
+            templ1+=to_string(l1->val);
+            l1=l1->next;
+        }
+        reverse(templ1.begin(),templ1.end());
+          while(l2){
+            
+            templ2+=to_string(l2->val);
+            l2=l2->next;
+        }
+        reverse(templ2.begin(),templ2.end());
+        int no1=stoi(templ1);
+        int no2=stoi(templ2);
+        int result=no1+no2;
+  ListNode *prev=NULL;
+        ListNode *head=NULL;
+        if(result==0){
+            return new ListNode(0);
+        }
+        
+        while(result){
+            int remainder=result%10;
+            result=result/10;
+            ListNode *newnode=new ListNode(remainder);
+            if(prev==NULL)
+                head=newnode;
+            else
+                prev->next=newnode;
+            prev=newnode;
+        }
+        return head;
+    }
+};
